@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { GenerateReport } from './controllers/usuarios';
+import { GenerateReport } from './controllers/admin/usuarios';
 import { DataReporteGeneral } from './entity/DataReporteGeneral';
 import Server from './models/server';
 

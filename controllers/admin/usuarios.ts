@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { json } from 'sequelize/types';
-import { DataReporteGeneral } from '../entity/DataReporteGeneral';
-import Usuario from '../models/usuario';
+import { DataReporteGeneral } from '../../entity/DataReporteGeneral';
+import Usuario from '../../models/usuario';
 
 
 export const getUsuarios = async( req: Request , res: Response ) => {
