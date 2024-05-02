@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import db from '../db/connection';
+import db from '../../infrastructure/data/db/connection';
 
 const Usuario = db.define('Usuario', {
     nombre: {

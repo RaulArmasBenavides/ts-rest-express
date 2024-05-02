@@ -1,8 +1,8 @@
-import express, { Application } from 'express';
-import userRoutes from '../routes/usuario';
+import express, { Application, Router } from 'express';
+// import userRoutes from '../routes/usuario';
 import cors from 'cors';
 
-import db from '../db/connection';
+import db from '../infrastructure/data/db/connection';
 
 
 class Server {
@@ -20,7 +20,7 @@ class Server {
         // Métodos iniciales
         this.dbConnection();
         this.middlewares();
-        this.routes();
+        // this.routes();
     }
 
     async dbConnection() {
@@ -44,17 +44,19 @@ class Server {
 
         // Lectura del body
         // this.app.use( express.json() );
-        this.app.use(morgan('tiny'));
+        // this.app.use(morgan('tiny')); //parece que se necesita implementar algo más TO-DO
         this.app.use(express.json({limit:'100MB'}));
         this.app.use(express.urlencoded({ extended: true, limit: '100MB' }));
         // Carpeta pública
         this.app.use( express.static('public') );
     }
 
-
-    routes() {
-        this.app.use( this.apiPaths.usuarios, userRoutes )
-    }
+    public setRoutes(  router: Router ) {
+        this.app.use(router);
+      }
+    // routes() {
+    //     this.app.use( this.apiPaths.usuarios, userRoutes )
+    // }
 
 
     listen() {
@@ -67,6 +69,3 @@ class Server {
 
 export default Server;
 
-function morgan(arg0: string): any {
-    throw new Error('Function not implemented.');
-}
