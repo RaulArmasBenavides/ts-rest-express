@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 
-const db = new Sequelize('node', 'demos', '123456', {
+const db = new Sequelize('spring', 'sa', 'sasasa', {
     host: 'localhost',
     dialect: 'mysql',
     // logging: false,
