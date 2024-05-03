@@ -59,9 +59,6 @@ export const postUsuario = async( req: Request , res: Response ) => {
             msg: 'Hable con el administrador'
         })    
     }
-
-
-
 }
 
 export const putUsuario = async( req: Request , res: Response ) => {
