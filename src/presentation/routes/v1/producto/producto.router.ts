@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createProducto, getProductos } from './producto.controller';
+import { createProduct, getProducts } from './producto.controller';
 // import { validateContactUser, validateUser } from '../../../middlewares/admin.middleware';
 // import UsuarioController from '../../../controllers/admin/usuario.controller';
 // import { validateParamsGetNoSQL } from '../../../middlewares/interceptor.middleware';
@@ -7,8 +7,8 @@ import { createProducto, getProductos } from './producto.controller';
 const router = Router();
 // const usuarioController = new UsuarioController()
 router.route('/list')
-     .get(getProductos)
-     .post(createProducto)
+     .get(getProducts)
+     .post(createProduct)
     //  .post(validateUser, usuarioController.createUsuario)
     //  .put(validateUser, usuarioController.updateUsuario)
 

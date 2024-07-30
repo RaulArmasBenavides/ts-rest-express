@@ -1,7 +1,6 @@
 import express, { Application, Router } from 'express';
-// import userRoutes from '../routes/usuario';
+import morgan from 'morgan';
 import cors from 'cors';
-
 import db from '../infrastructure/data/db/connection';
 
 
@@ -9,10 +8,6 @@ class Server {
 
     private app: Application;
     private port: string;
-    private apiPaths = {
-        usuarios: '/api/usuarios'
-    }
-
     constructor() {
         this.app  = express();
         this.port = process.env.PORT ?? '8000';
@@ -38,13 +33,8 @@ class Server {
     }
 
     middlewares() {
-
-        // CORS
-        this.app.use( cors() );
-
-        // Lectura del body
-        // this.app.use( express.json() );
-        // this.app.use(morgan('tiny')); //parece que se necesita implementar algo más TO-DO
+        this.app.use(cors());
+        this.app.use(morgan('tiny'));  
         this.app.use(express.json({limit:'100MB'}));
         this.app.use(express.urlencoded({ extended: true, limit: '100MB' }));
         // Carpeta pública
@@ -53,11 +43,8 @@ class Server {
 
     public setRoutes(  router: Router ) {
         this.app.use(router);
-      }
-    // routes() {
-    //     this.app.use( this.apiPaths.usuarios, userRoutes )
-    // }
-
+    
+    }
 
     listen() {
         this.app.listen( this.port, () => {
