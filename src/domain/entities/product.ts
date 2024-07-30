@@ -1,41 +1,34 @@
-import { DataTypes,Model  } from 'sequelize';
-import db from '../../infrastructure/data/db/connection';
+export interface ProductOptions {
+    name: string;
+    description: string;
+    price:number;
+    stock:number;
+    creation_date?: Date;
+  }
+  
 
-class Product extends Model {
+export class Product  {
     public id!: number;
     public name!: string;
     public description!: string;
     public price!: number;
     public stock!: number;
     public creation_date!: Date;
+
+    constructor( options: ProductOptions ) {
+    
+        const { name, description, price, stock,creation_date = new Date() } = options;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.creation_date = creation_date;
+      }
+    static fromObject = ( object: { [key: string]: any } ): Product => {
+        const { name, description, price, stock, creation_date} = object;
+        const log = new Product({
+            name, description, price, stock,creation_date
+        });
+        return log;
+      }
 }
-
-Product.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: {
-        type: DataTypes.STRING
-    },
-    description: {
-        type: DataTypes.STRING
-    },
-    price: {
-        type: DataTypes.DECIMAL
-    },
-    stock: {
-        type: DataTypes.INTEGER
-    },
-    creation_date: {
-        type: DataTypes.DATE
-    }
-}, {
-    sequelize: db,
-    tableName: 'Product',
-    timestamps: false  // Disable automatic creation of createdAt and updatedAt fields
-});
-
-
-export default Product;
