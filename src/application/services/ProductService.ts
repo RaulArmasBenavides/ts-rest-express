@@ -1,12 +1,12 @@
-import ProductModel from "../../data/mysql/models/product.model";
-import {Product} from "../../domain/entities/product";
-import { IProductService } from "../../domain/interfaces/IProductService";
+import ProductModel from '../../data/mysql/models/product.model';
+import { Product } from '../../domain/entities/product';
+import { IProductService } from '../../domain/interfaces/IProductService';
 
 // @injectable()
 export class ProductService implements IProductService {
   async getAllProducts(): Promise<Product[]> {
     const productResult = await ProductModel.findAll();
-    return productResult.map(Product.fromObject)
+    return productResult.map(Product.fromObject);
   }
 
   async getProductById(id: number): Promise<Product | null> {
@@ -20,15 +20,18 @@ export class ProductService implements IProductService {
     return Product.fromObject(ProductResult);
   }
 
-  async updateProduct(id: number, productData: Partial<Product>): Promise<void> {
+  async updateProduct(
+    id: number,
+    productData: Partial<Product>,
+  ): Promise<void> {
     await ProductModel.update(productData, {
-      where: { id }
+      where: { id },
     });
   }
 
   async deleteProduct(id: number): Promise<void> {
     await ProductModel.destroy({
-      where: { id }
+      where: { id },
     });
   }
 }

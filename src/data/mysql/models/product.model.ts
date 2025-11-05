@@ -1,29 +1,32 @@
 import { DataTypes } from 'sequelize';
 import db from '../../../infrastructure/data/db/connection';
 
-const ProductModel = db.define('product', {
-    id:{
-       type :DataTypes.INTEGER,
-       primaryKey:true
+const ProductModel = db.define(
+  'product',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
     },
     name: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     description: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     price: {
-        type: DataTypes.DECIMAL
+      type: DataTypes.DECIMAL,
     },
-    stock:{
-        type :DataTypes.INTEGER
-     },
-     creation_date:{
-        type :DataTypes.DATE
-     }
-}, {
-    timestamps: false  // Deshabilita la creación automática de los campos createdAt y updatedAt
-});
-
+    stock: {
+      type: DataTypes.INTEGER,
+    },
+    creation_date: {
+      type: DataTypes.DATE,
+    },
+  },
+  {
+    timestamps: false, // Deshabilita la creación automática de los campos createdAt y updatedAt
+  },
+);
 
 export default ProductModel;
