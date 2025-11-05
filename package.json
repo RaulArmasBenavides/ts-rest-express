@@ -10,7 +10,7 @@
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "Raul Armas",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.19",
