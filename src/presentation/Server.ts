@@ -3,8 +3,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import db from '../infrastructure/data/db/connection';
 import { swaggerDocs as V1SwaggerDocs } from "../swagger";
+import SocketIOService from './ws/SocketIOService';
 
-class Server {
+export class Server {
 
     private readonly app: Application;
     private readonly port: string;
@@ -51,9 +52,11 @@ class Server {
             console.log('Servidor corriendo en puerto ' + this.port );
             V1SwaggerDocs(this.app, this.port);
         })
+
+       const myServer = SocketIOService.instance;
+    //   myServer.initSocketIO(this.app.httpServer);
     }
 
 }
 
-export default Server;
-
+ 
