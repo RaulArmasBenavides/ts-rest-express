@@ -1,5 +1,5 @@
 import { ProductOptions, Product } from "../../../domain/entities/product";
-import { IProductRepository } from "../../../domain/interfaces/IProductRepository";
+import { IProductRepository } from "../../../domain/interfaces/product-repository.interface";
 import { ProductMapper } from "../../mappers/product.mapper";
 import ProductModel from "../models/product.model";
 

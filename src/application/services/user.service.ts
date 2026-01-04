@@ -1,22 +1,9 @@
 import { User } from "../../domain/entities/user.entity";
 import { IUserService } from "../../domain/interfaces/user-service.interface";
 import { IUserRepository } from "../../domain/interfaces/user-repository.interface";
+import { CreateUserDTO, UpdateUserDTO } from "../types/create-user-dto";
 
-export type CreateUserDTO = {
-  name: string;
-  email: string;
-  password: string;
-  img?: string;
-  role?: string;
-  google?: boolean;
-};
-
-export type UpdateUserDTO = Partial<Omit<CreateUserDTO, 'password'>> & {
-  password?: string;
-};
-
-
-
+  
 export class UserService implements IUserService {
   constructor(private readonly userRepository: IUserRepository) {}
 
@@ -39,8 +26,8 @@ export class UserService implements IUserService {
     // - set defaults
     return this.userRepository.create({
       ...data,
-      role: data.role ?? 'USER_ROLE',
-      google: data.google ?? false,
+      // role: data.role ?? 'USER_ROLE',
+      // google: data.google ?? false,
     } as any);
   }
 

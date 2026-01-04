@@ -1,8 +1,9 @@
-import { CustomError } from "../../../../domain/errors/CustomError";
+import { CustomError } from '../../../../domain/errors/CustomError';
 import { Request, Response } from 'express';
-import { IUserService } from "../../../../domain/interfaces/user-service.interface";
+import { IUserService } from '../../../../domain/interfaces/user-service.interface';
+import { CreateUserDTO, UpdateUserDTO } from '../../../../application/types/create-user-dto';
 
- export class UserController {
+export class UserController {
   constructor(public readonly userService: IUserService) {}
 
   private readonly handleError = (error: unknown, res: Response) => {
@@ -37,7 +38,7 @@ import { IUserService } from "../../../../domain/interfaces/user-service.interfa
 
   /** POST /api/users */
   createUser = (req: Request, res: Response) => {
-    const [error, dto] = CreateUserDto.create(req.body);
+    const [error, dto] = CreateUserDTO.create(req.body);
     if (error) return res.status(400).json({ error });
 
     this.userService
@@ -50,7 +51,7 @@ import { IUserService } from "../../../../domain/interfaces/user-service.interfa
   updateUser = (req: Request, res: Response) => {
     const { id } = req.params;
 
-    const [error, dto] = UpdateUserDto.create({ id, ...req.body });
+    const [error, dto] = UpdateUserDTO.create({ id, ...req.body });
     if (error) return res.status(400).json({ error });
 
     this.userService

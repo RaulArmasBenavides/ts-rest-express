@@ -1,6 +1,6 @@
 import { Product } from '../../domain/entities/product';
-import { IProductService } from '../../domain/interfaces/IProductService';
-import { IProductRepository } from '../../domain/interfaces/IProductRepository';
+import { IProductService } from '../../domain/interfaces/product-service.interface';
+import { IProductRepository } from '../../domain/interfaces/product-repository.interface';
 
 // @injectable()
 export class ProductService implements IProductService {

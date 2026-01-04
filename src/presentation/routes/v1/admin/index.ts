@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import usuario from './usuarios.router';
+import usuario from './user.router';
 // import modulo from './modulo.router';
 // import perfil from './perfil.router';
 
