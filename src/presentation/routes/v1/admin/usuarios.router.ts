@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getUsuarios } from './usuarios.controller';
+import { getUsuarios } from './user.controller';
 // import { validateContactUser, validateUser } from '../../../middlewares/admin.middleware';
 // import UsuarioController from '../../../controllers/admin/usuario.controller';
 // import { validateParamsGetNoSQL } from '../../../middlewares/interceptor.middleware';

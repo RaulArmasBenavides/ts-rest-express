@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ProductService } from '../../../../application/services/ProductService';
+import { ProductService } from '../../../../application/services/product.service';
 import { ProductSequelizeRepository } from '../../../../infrastructure/data/repositories/product.sequelize.repository';
 
 // Composition root (simple, sin DI framework)
