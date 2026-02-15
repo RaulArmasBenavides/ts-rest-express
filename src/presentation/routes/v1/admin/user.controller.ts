@@ -1,78 +1,72 @@
-import { CustomError } from '../../../../domain/errors/CustomError';
 import { Request, Response } from 'express';
 import { IUserService } from '../../../../domain/interfaces/user-service.interface';
 import { CreateUserDTO, UpdateUserDTO } from '../../../../application/types/create-user-dto';
+import { CustomError } from '../../../../application/errors/CustomError';
 
 export class UserController {
-  constructor(public readonly userService: IUserService) {}
-
-  private readonly handleError = (error: unknown, res: Response) => {
-    if (error instanceof CustomError) {
-      return res.status(error.statusCode).json({ error: error.message });
-    }
-
-    console.log(`${error}`);
-    return res.status(500).json({ error: 'Internal server error' });
-  };
+  constructor(private readonly userService: IUserService) {}
 
   /** GET /api/users */
-  getUsers = (_req: Request, res: Response) => {
-    this.userService
-      .getAllUsers()
-      .then((users) => res.json(users))
-      .catch((error) => this.handleError(error, res));
+  getUsers = async (_req: Request, res: Response): Promise<void> => {
+    const users = await this.userService.getAllUsers();
+    res.json(users);
   };
 
   /** GET /api/users/:id */
-  getUserById = (req: Request, res: Response) => {
+  getUserById = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
-    this.userService
-      .getUserById(id)
-      .then((user) => {
-        if (!user) return res.status(404).json({ error: 'User not found' });
-        return res.json(user);
-      })
-      .catch((error) => this.handleError(error, res));
+    const user = await this.userService.getUserById(id);
+
+    if (!user) {
+      throw CustomError.notFound('User not found');
+    }
+
+    res.json(user);
   };
 
   /** POST /api/users */
-  createUser = (req: Request, res: Response) => {
+  createUser = async (req: Request, res: Response): Promise<void> => {
     const [error, dto] = CreateUserDTO.create(req.body);
-    if (error) return res.status(400).json({ error });
 
-    this.userService
-      .createUser(dto!)
-      .then((user) => res.status(201).json(user))
-      .catch((error) => this.handleError(error, res));
+    if (error) {
+      throw CustomError.badRequest(error);
+    }
+
+    const user = await this.userService.createUser(dto!);
+
+    res.status(201).json(user);
   };
 
   /** PATCH /api/users/:id */
-  updateUser = (req: Request, res: Response) => {
+  updateUser = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     const [error, dto] = UpdateUserDTO.create({ id, ...req.body });
-    if (error) return res.status(400).json({ error });
 
-    this.userService
-      .updateUser(id, dto!)
-      .then((user) => {
-        if (!user) return res.status(404).json({ error: 'User not found' });
-        return res.json(user);
-      })
-      .catch((error) => this.handleError(error, res));
+    if (error) {
+      throw CustomError.badRequest(error);
+    }
+
+    const user = await this.userService.updateUser(id, dto!);
+
+    if (!user) {
+      throw CustomError.notFound('User not found');
+    }
+
+    res.json(user);
   };
 
   /** DELETE /api/users/:id */
-  deleteUser = (req: Request, res: Response) => {
+  deleteUser = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
-    this.userService
-      .deleteUser(id)
-      .then((ok) => {
-        if (!ok) return res.status(404).json({ error: 'User not found' });
-        return res.status(204).send();
-      })
-      .catch((error) => this.handleError(error, res));
+    const ok = await this.userService.deleteUser(id);
+
+    if (!ok) {
+      throw CustomError.notFound('User not found');
+    }
+
+    res.status(204).send();
   };
 }

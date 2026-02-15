@@ -1,8 +1,6 @@
-import { CustomError } from "../errors/CustomError";
+import { DomainError } from '../errors/DomainError';
 
- 
 export class User {
-
   constructor(
     public id: string,
     public name: string,
@@ -10,25 +8,18 @@ export class User {
     public password: string,
     public role: string[],
     public img?: string,
-  ) { }
+  ) {}
 
-  static fromObject( object: { [ key: string ]: any; } ) {
-    const { id, _id, name, email, emailValidated, password, role, img } = object;
+  static fromObject(object: { [key: string]: any }) {
+    const { id, _id, name, email, emailValidated, password, role, img } =
+      object;
 
-    if ( !_id && !id ) {
-      throw CustomError.badRequest( 'Missing id' );
-    }
+    if (!_id && !id) throw new DomainError('User id is required');
+    if (!name) throw new DomainError('User name is required');
+    if (!email) throw new DomainError('User email is required');
+    if (!password) throw new DomainError('User password is required');
+    if (!role) throw new DomainError('User role is required');
 
-    if ( !name ) throw CustomError.badRequest( 'Missing name' );
-    if ( !email ) throw CustomError.badRequest( 'Missing email' );
-    // if ( emailValidated === undefined ) throw CustomError.badRequest( 'Missing emailValidated' );
-    if ( !password ) throw CustomError.badRequest( 'Missing password' );
-    if ( !role ) throw CustomError.badRequest( 'Missing role' );
-
-
-    return new User( _id || id, name, email, password, role, img );
-
+    return new User(_id || id, name, email, password, role, img);
   }
-
-
 }
